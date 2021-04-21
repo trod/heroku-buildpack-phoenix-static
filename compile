@@ -1,7 +1,7 @@
 if [ -f "$assets_dir/yarn.lock" ]; then
-  yarn deploy
+  # yarn deploy
 else
-  npm run deploy
+  # npm run deploy
 fi
 
 cd $phoenix_dir
