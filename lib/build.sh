@@ -116,35 +116,34 @@ install_yarn() {
 
 install_and_cache_deps() {
   cd $assets_dir
+  if [ $compile_node = true ]; then
+    if [ -d $cache_dir/node_modules ]; then
+      info "Loading node modules from cache"
+      mkdir node_modules
+      cp -R $cache_dir/node_modules/* node_modules/
+    fi
 
-  if [ -d $cache_dir/node_modules ]; then
-    info "Loading node modules from cache"
-    mkdir node_modules
-    cp -R $cache_dir/node_modules/* node_modules/
-  fi
+    info "Installing node modules"
+    if [ -f "$assets_dir/yarn.lock" ]; then
+      install_yarn_deps
+    else
+      install_npm_deps
+    fi
 
-  info "Installing node modules"
-  if [ -f "$assets_dir/yarn.lock" ]; then
-    install_yarn_deps
-  else
-    install_npm_deps
-  fi
+    info "Caching node modules"
+    cp -R node_modules $cache_dir
 
-  info "Caching node modules"
-  cp -R node_modules $cache_dir
+    PATH=$assets_dir/node_modules/.bin:$PATH
 
-  PATH=$assets_dir/node_modules/.bin:$PATH
-
-  install_bower_deps
+    install_bower_deps
+  fi  
 }
 
 install_npm_deps() {
-   if [ $compile_node = true ]; then
     npm prune | indent
     npm install --quiet --unsafe-perm --userconfig $build_dir/npmrc 2>&1 | indent
     npm rebuild 2>&1 | indent
     npm --unsafe-perm prune 2>&1 | indent
-  fi
 }
 
 install_yarn_deps() {
