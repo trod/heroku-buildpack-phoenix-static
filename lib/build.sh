@@ -195,7 +195,7 @@ run_compile() {
     source $custom_compile 2>&1 | indent
   else
     info "Running default compile"
-    source ${build_pack_dir}/${compile} 2>&1 | indent
+    # source ${build_pack_dir}/${compile} 2>&1 | indent
   fi
 
   cd $phoenix_dir
