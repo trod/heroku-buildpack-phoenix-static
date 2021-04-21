@@ -82,7 +82,7 @@ install_npm() {
   else
     info "Downloading and installing npm $npm_version (replacing version `npm --version`)..."
     cd $build_dir
-    npm install --unsafe-perm --quiet -g npm@$npm_version 2>&1 >/dev/null | indent
+    npm install --prefix $assets_dir --unsafe-perm --quiet -g npm@$npm_version 2>&1 >/dev/null | indent
   fi
 }
 
@@ -195,7 +195,7 @@ run_compile() {
     source $custom_compile 2>&1 | indent
   else
     info "Running default compile"
-    # source ${build_pack_dir}/${compile} 2>&1 | indent
+    source ${build_pack_dir}/${compile} 2>&1 | indent
   fi
 
   cd $phoenix_dir
