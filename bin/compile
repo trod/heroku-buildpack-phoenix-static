@@ -41,7 +41,7 @@ if [ -f "$assets_dir/yarn.lock" ]; then
 fi
 
 head "Building dependencies"
-install_and_cache_deps
+# install_and_cache_deps
 
 compile
 
